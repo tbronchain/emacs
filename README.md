@@ -1,9 +1,11 @@
-# Emacs configuration by Thibault Bronchain
+# Emacs configuration
+### by Thibault Bronchain
 
 - Edit dot.emacs and replace "/Users/thibaultbronchain/" by the right path to your user home
 - install emacs
 
 `$ cp dot.emacs ~/.emacs`
+
 `$ cp -r dot.emacs.d ~/.emacs.d`
 
 - check cheat sheet here http://www.rgrjr.com/emacs/emacs_cheat.html

@@ -12,16 +12,82 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+)
+
+(setq android_project (getenv "ANDROID_PROJECT"))
+(setq user (getenv "USER"))
+;;(setq android_project "toto")
+
+(if (string-equal android_project nil)
+    (progn
+      )
+    (progn
+      (load-file (format "/Users/%s/.emacs.d/modules/cedet/cedet-devel-load.el" user))
+
+
+      (custom-set-variables
+       '(semantic-default-submodes (quote (global-semantic-idle-completions-mode global-semantic-idle-scheduler-mode global-semanticdb-minor-mode global-semantic-idle-summary-mode global-semantic-mru-bookmark-mode)))
+       '(semantic-idle-scheduler-idle-time 10)
+       ;; '(semanticdb-javap-classpath (quote ("/usr/lib/jvm/jdk1.6.0_37/jre/lib/rt.jar"))) ;; use this on ubuntu linux (and probably other linuxes distributions)
+       '(semanticdb-javap-classpath (quote ("/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Classes/classes.jar"))) ;; use this on OSX
+       )
+
+      ;; 1. enable it
+      (semantic-mode 1)
+      (global-semanticdb-minor-mode 1)
+
+      ;; 2. use ede to manage project
+      (global-ede-mode t)
+
+      (ede-java-root-project android_project
+			     :file (format "/Users/%s/Sources/android/%s/build.xml" user android_project)
+;;			     :file "/Users/thibaultbronchain/Sources/android/toto/build.xml"
+			     :srcroot '("src")
+			     :classpath '(format "/Users/%s/bin/adt/sdk/platforms/android-19/android.jar" user))
+
+      ;; 3. enable db-javap
+      (require 'semantic/db-javap)
+
+      ;; 4. enable auto-complete
+      (require 'semantic/ia)
+      (defun my-cedet-hook ()
+	;; functions which are disabled
+	;; (local-set-key "\C-cp" 'semantic-ia-show-summary)
+	;; (local-set-key "\C-cl" 'semantic-ia-show-doc)
+	;; (local-set-key "." 'semantic-complete-self-insert)
+	;; (local-set-key ">" 'semantic-complete-self-insert)
+	(local-set-key "\M-n" 'semantic-ia-complete-symbol-menu)  ;; auto completet by menu
+	(local-set-key "\C-c/" 'semantic-ia-complete-symbol)
+	(local-set-key "\C-cb" 'semantic-mrub-switch-tags)
+	(local-set-key "\C-cj" 'semantic-ia-fast-jump)
+	(local-set-key "\C-cR" 'semantic-symref)
+	(local-set-key "\C-cr" 'semantic-symref-symbol)
+	)
+      (add-hook 'c-mode-common-hook 'my-cedet-hook)
+
+      ;; 5. use four spaces to indent java source
+      (defun my-java-mode-hook ()
+	(setq indent-tabs-mode nil)
+	(setq tab-width 4)
+	)
+      (add-hook 'java-mode-hook 'my-java-mode-hook)
+      )
+  )
+
+
+;; general modules
+(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules" user))
 
 ;; Scala mode
-(add-to-list 'load-path "/Users/thibaultbronchain/.emacs.d/modules/scala-emacs")
+(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/scala-emacs" user))
 (require 'scala-mode-auto)
+;; Php mode
+(require 'php-mode)
 
 (setq-default indent-tabs-mode nil)
 
-(global-font-lock-mode t) ;pour avoir les couleurs sans avoir a taper font-lock-mode
-(setq font-lock-maximum-decoration t) ;maximum de couleurs
+(global-font-lock-mode t) ;get colors without typing font-lock-mode
+(setq font-lock-maximum-decoration t) ;more colors
 
 ;;(if first-time
     (setq auto-mode-alist
@@ -31,20 +97,22 @@
                      ("\\.lsp$" . lisp-mode)
                      ("\\.scm$" . scheme-mode)
                      ("\\.pl$" . perl-mode)
+                     ("\\.php$" . php-mode)
+                     ("\\.inc$" . php-mode)
                      ) auto-mode-alist))
+;;)
 
-;; Mise en valeur syntaxique automatique
+;; Highlight auto syntax
 (defvar font-lock-auto-mode-list
   (list 'c-mode 'c++-mode 'c++-c-mode 'emacs-lisp-mode 'lisp-mode 'perl-mode 'scheme-mode)
-  "Listes des modes a demarrer toujours avec mise en valeur")
+  "mode activated with auto highlight")
 
 (defvar font-lock-mode-keyword-alist
   '((c++-c-mode . c-font-lock-keywords)
     (perl-mode . perl-font-lock-keywords))
-  "Associations entre modes et mots-clés")
+  "keywords/modes association")
 
 (defun font-lock-auto-mode-select ()
-  "Sélectionne automatiquement type de mise en valeur si le major mode courant est dans font-lock-auto-mode-list"
   (if (memq major-mode font-lock-auto-mode-list)
       (progn
 	(font-lock-mode t))
@@ -53,7 +121,7 @@
 
 (global-set-key [M-f1] 'font-lock-fontify-buffer)
 
-;; Nouveau dabbrev
+;; New dabbrev
 ;;(require 'new-dabbrev)
 (setq dabbrev-always-check-other-buffers t)
 (setq dabbrev-abbrev-char-regexp "\\sw\\|\\s_")
@@ -70,7 +138,7 @@
 	     (set (make-local-variable 'dabbrev-case-fold-search) t)
 	     (set (make-local-variable 'dabbrev-case-replace) t)))
 
-;; Mode C++ et C...
+;; Mode C++ and C...
 (defun my-c++-mode-hook ()
   (setq tab-width 4)
   (define-key c++-mode-map "\C-m" 'reindent-then-newline-and-indent)
@@ -95,6 +163,7 @@
   (setq c-brace-offset -4)
   (setq c-argdecl-indent 0)
   (setq c-label-offset -4))
+
 
 ;; Turn off the startup message.
 (setq inhibit-startup-message 1)
@@ -153,8 +222,11 @@
 (add-hook 'shell-mode-hook 'set-key-to-bottom)
 
 ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(add-to-list 'load-path "/Users/thibaultbronchain/.emacs.d/modules/auto-complete")
+(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/auto-complete" user))
 (require 'auto-complete-config)
 (ac-config-default)
+
+(when (fboundp 'winner-mode)
+  (winner-mode 1))
 
 ;;EOF

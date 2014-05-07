@@ -1,0 +1,32 @@
+;; Object toto/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "toto/"
+  :tables
+  (list
+    (semanticdb-table "MainActivity.java"
+      :major-mode 'java-mode
+      :tags 
+        '( ("com.test.toto" package nil nil [1 23])
+            ("android.app.Activity" include nil nil [25 53])
+            ("android.os.Bundle" include nil nil [54 79])
+            ("android.widget.LinearLayout" include nil nil [80 115])
+            ("MainActivity" type
+               (:typemodifiers ("public")
+                :superclasses "Activity"
+                :members 
+                  ( ("onCreate" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("savedInstanceState" variable (:type "Bundle") (reparse-symbol formal_parameters) [255 280]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [234 450]))                  
+                :type "class")
+                nil [117 452]))          
+      :file "MainActivity.java"
+      :pointmax 453
+      :fsize 452
+      :lastmodtime '(21352 47549 0 0)
+      :unmatched-syntax nil))
+  :file "!Users!thibaultbronchain!Sources!android!toto!src!com!test!toto!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

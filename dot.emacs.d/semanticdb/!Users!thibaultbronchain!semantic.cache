@@ -1,0 +1,73 @@
+;; Object thibaultbronchain/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "thibaultbronchain/"
+  :tables
+  (list
+    (semanticdb-table ".emacs"
+      :major-mode 'emacs-lisp-mode
+      :tags 
+        '( ("custom-set-variables" code nil nil [1 402])
+            ("custom-set-faces" code nil nil [403 641])
+            ("setq" code nil nil [643 692])
+            ("if" code nil nil [726 2887])
+            ("add-to-list" code nil nil [2909 2977])
+            ("add-to-list" code nil nil [2993 3073])
+            ("scala-mode-auto" include nil nil [3074 3100])
+            ("php-mode" include nil nil [3113 3132])
+            ("setq-default" code nil nil [3134 3169])
+            ("global-font-lock-mode" code nil nil [3171 3196])
+            ("setq" code nil nil [3256 3293])
+            ("setq" code nil nil [3337 3752])
+            ("font-lock-auto-mode-list" variable (:default-value (list (quote c-mode) (quote c++-mode) (quote c++-c-mode) (quote emacs-lisp-mode) (quote lisp-mode) (quote perl-mode) (quote scheme-mode))) nil [3799 3984])
+            ("font-lock-mode-keyword-alist" variable (:default-value (quote ((c++-c-mode . c-font-lock-keywords) (perl-mode . perl-font-lock-keywords)))) nil [3986 4148])
+            ("font-lock-auto-mode-select" function nil nil [4150 4393])
+            ("global-set-key" code nil nil [4395 4444])
+            ("setq" code nil nil [4490 4533])
+            ("setq" code nil nil [4534 4581])
+            ("add-hook" code nil nil [4582 4761])
+            ("add-hook" code nil nil [4762 4932])
+            ("add-hook" code nil nil [4933 5102])
+            ("my-c++-mode-hook" function nil nil [5124 5524])
+            ("my-c-mode-hook" function nil nil [5526 5987])
+            ("setq" code nil nil [6023 6055])
+            ("line-number-mode" code nil nil [6146 6166])
+            ("column-number-mode" code nil nil [6167 6189])
+            ("setq" code nil nil [6222 6255])
+            ("display-time" code nil nil [6256 6270])
+            ("paren" include nil nil [6302 6318])
+            ("setq" code nil nil [6319 6344])
+            ("show-paren-mode" code nil nil [6345 6362])
+            ("transient-mark-mode" code nil nil [6385 6408])
+            ("global-hl-line-mode" code nil nil [6438 6461])
+            ("custom-set-faces" code nil nil [6462 6514])
+            ("setq-default" code nil nil [6548 6589])
+            ("global-set-key" code nil nil [6590 6639])
+            ("global-set-key" code nil nil [6660 6689])
+            ("global-set-key" code nil nil [6690 6722])
+            ("global-set-key" code nil nil [6723 6753])
+            ("global-set-key" code nil nil [6780 6858])
+            ("global-set-key" code nil nil [6859 6908])
+            ("global-set-key" code nil nil [6909 6989])
+            ("global-set-key" code nil nil [6990 7040])
+            ("ruby-mode" function (:prototype-flag t) nil [7056 7123])
+            ("add-to-list" code nil nil [7124 7178])
+            ("ansi-color-for-comint-mode-on" function
+               (:prototype-flag t
+                :user-visible-flag t)
+                nil [7191 7251])
+            ("add-hook" code nil nil [7252 7310])
+            ("to-bottom" function nil nil [7311 7433])
+            ("set-key-to-bottom" function nil nil [7434 7515])
+            ("add-hook" code nil nil [7516 7562])
+            ("add-to-list" code nil nil [7628 7710])
+            ("auto-complete-config" include nil nil [7711 7742])
+            ("ac-config-default" code nil nil [7743 7762])
+            ("when" code nil nil [7764 7811]))          
+      :file ".emacs"
+      :pointmax 7819
+      :fsize 7820
+      :lastmodtime '(21352 48274 0 0)
+      :unmatched-syntax nil))
+  :file "!Users!thibaultbronchain!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

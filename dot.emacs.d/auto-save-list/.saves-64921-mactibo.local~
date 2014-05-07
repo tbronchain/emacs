@@ -1,0 +1,4 @@
+/usr/local/etc/nginx/nginx.conf
+/usr/local/etc/nginx/#nginx.conf#
+/usr/local/etc/nginx/fastcgi.conf
+/usr/local/etc/nginx/#fastcgi.conf#

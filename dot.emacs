@@ -1,5 +1,4 @@
 ;; @author: Thibault BRONCHAIN
-;;
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -16,8 +15,8 @@
 )
 
 (setq android_project (getenv "ANDROID_PROJECT"))
-(setq user (getenv "USER"))
 ;;(setq android_project "toto")
+(setq user (getenv "USER"))
 
 (if (string-equal android_project nil)
     (progn
@@ -40,11 +39,15 @@
       ;; 2. use ede to manage project
       (global-ede-mode t)
 
+      (setq classpath (format "/Users/%s/bin/adt/sdk/platforms/android-19/android.jar" user))
+
       (ede-java-root-project android_project
 			     :file (format "/Users/%s/Sources/android/%s/build.xml" user android_project)
 ;;			     :file "/Users/thibaultbronchain/Sources/android/toto/build.xml"
 			     :srcroot '("src")
-			     :classpath '(format "/Users/%s/bin/adt/sdk/platforms/android-19/android.jar" user))
+			     :classpath '("/Users/thibaultbronchain/bin/adt/sdk/platforms/android-19/android.jar"))
+			     :classpath '(classpath)
+;;			     :classpath '((format "/Users/%s/bin/adt/sdk/platforms/android-19/android.jar" user)))
 
       ;; 3. enable db-javap
       (require 'semantic/db-javap)
@@ -57,7 +60,7 @@
 	;; (local-set-key "\C-cl" 'semantic-ia-show-doc)
 	;; (local-set-key "." 'semantic-complete-self-insert)
 	;; (local-set-key ">" 'semantic-complete-self-insert)
-	(local-set-key "\M-n" 'semantic-ia-complete-symbol-menu)  ;; auto completet by menu
+;;	(local-set-key "\M-n" 'semantic-ia-complete-symbol-menu)  ;; auto completet by menu
 	(local-set-key "\C-c/" 'semantic-ia-complete-symbol)
 	(local-set-key "\C-cb" 'semantic-mrub-switch-tags)
 	(local-set-key "\C-cj" 'semantic-ia-fast-jump)
@@ -76,12 +79,23 @@
   )
 
 
+;; MELPA
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+(unless (package-installed-p 'scala-mode2)
+  (package-refresh-contents) (package-install 'scala-mode2))
+
+
+
 ;; general modules
 (add-to-list 'load-path (format "/Users/%s/.emacs.d/modules" user))
 
-;; Scala mode
-(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/scala-emacs" user))
-(require 'scala-mode-auto)
+;; Old Scala mode
+;;(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/scala-emacs" user))
+;;(require 'scala-mode-auto)
+
 ;; Php mode
 (require 'php-mode)
 
@@ -222,12 +236,61 @@
   )
 (add-hook 'shell-mode-hook 'set-key-to-bottom)
 
+;;(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/auto-complete" user))
+;;(require 'auto-complete-config)
 ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/auto-complete" user))
-(require 'auto-complete-config)
-(ac-config-default)
+;;(ac-config-default)
 
 (when (fboundp 'winner-mode)
   (winner-mode 1))
+
+
+
+
+
+;; company mode
+;;(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/company-mode" user))
+;;(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(global-set-key "\M-n" 'company-complete)  ;; auto completet by menu
+(setq company-idle-delay 500000000)
+
+
+
+;;(add-to-list 'load-path
+;;              "~/.emacs.d/modules/yasnippet")
+;;(require 'yasnippet)
+;;(yas-global-mode 1)
+;;
+;;
+;;
+;;
+;;(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/auto-complete" user))
+;;(require 'auto-complete-config)
+;;(ac-config-default)
+;;
+;;(add-to-list 'ac-dictionary-directories (format "/Users/%s/.emacs.d/ac-dict" user))
+;;
+;;(add-to-list 'load-path (format "/Users/%s/.emacs.d/modules/auto-complete-clang" user))
+;;(require 'auto-complete-clang)
+;;
+;;(setq ac-auto-start nil)
+;;(setq ac-quick-help-delay 0.5)
+;;(ac-set-trigger-key "ESC TAB")
+;;;;(define-key ac-mode-map  [(control tab)] 'auto-complete)
+;;(defun my-ac-config ()
+;;  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+;;  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+;;;;  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+;;  (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+;;  (add-hook 'css-mode-hook 'ac-css-mode-setup)
+;;  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+;;  (global-auto-complete-mode t))
+;;(defun my-ac-cc-mode-setup ()
+;;  (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
+;;(add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+;;;; ac-source-gtags
+;;(my-ac-config)
+
 
 ;;EOF
